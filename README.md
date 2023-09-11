@@ -8,3 +8,8 @@ The data used in this project and contained in the CSV files in `/Data` come fro
 - `Data` is a directory that contains the data in CSV files
 - `Server` is a directory containing the database (`fitness_db.sqlite`) and the notebook used to populate them. The directory also contains the code running the Flask server.
 - `data_exploration.ipynb` is a Jupyter notebook used for the preliminary data exploration, analysis and visualisation. 
+
+## Dashboard preview
+The dashboard is currently not accessible through the internet but can be previewed here:
+
+![](dashboard.png)
