@@ -12,6 +12,9 @@ from sqlalchemy import create_engine, func
 from sqlalchemy import desc
 from pathlib import Path
 
+# CORS
+from flask_cors import CORS
+
 #########################################################
 # Functions
 #########################################################
@@ -54,6 +57,7 @@ daily_activity = Base.classes.daily_activity
 # Flask Setup
 #########################################################
 app = Flask(__name__)
+CORS(app)
 
 #########################################################
 # Flask Routes
@@ -104,6 +108,28 @@ def api_activities():
 
 	# Return jsonified dictionary
 	return jsonify(activities_dicts)
+
+# Static All Users data route
+@app.route("/api/v1.0/users")
+def api_users():
+	# Open session to the database
+	session = Session(bind=engine)
+	activities = session.query(daily_activity)
+
+	users = []
+
+	# Loop through the measurements to get the user ids
+	for row in activities:
+		users.append(row.UserId)
+
+	# Remove duplicates
+	users = list(dict.fromkeys(users))
+
+	# Close session
+	session.close()
+
+	# Return jsonified dictionary
+	return jsonify(users)
 
 # Dynamic User data route
 @app.route("/api/v1.0/u/<user_name>")
